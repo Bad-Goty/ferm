@@ -26,9 +26,11 @@ fun MainScreen(
 ) {
     val filas = 4
     val columnas = 5
-
-    val carritos by viewModel.carritos.collectAsStateWithLifecycle()
+    val capacidad = filas * columnas
     val activosUi by viewModel.carritosActivosUi.collectAsStateWithLifecycle() // <- activos formateados
+    val puedeAgregar = activosUi.size < capacidad
+    val carritos by viewModel.carritos.collectAsStateWithLifecycle()
+
 
     var showTabla by rememberSaveable { mutableStateOf(false) }
 
@@ -37,21 +39,21 @@ fun MainScreen(
     ) {
         Datos(
             modifier = Modifier.weight(1f),
-            onAgregar = {},
-            onQuitarPrimero = {}
+            onAgregar = { if (puedeAgregar) viewModel.agregarCarrito() },
+            onQuitarPrimero = { viewModel.quitarPrimero() } // o quitarPrimeroConMinimo()
         )
         Camara(
             modifier = Modifier.weight(2.5f),
             filas = filas,
             columnas = columnas,
             // pasamos solo los números para la grilla
-            activosNums = activosUi.map { it.carritoNum }
+            activos = activosUi   // ← usamos el DTO formateado
         )
     }
 
-    Button(onClick = { showTabla = true }) {
+    /*Button(onClick = { showTabla = true }) {
         Text("Ver tabla")
-    }
+    }*/
 
     if (showTabla) {
         CarritosTableDialog(

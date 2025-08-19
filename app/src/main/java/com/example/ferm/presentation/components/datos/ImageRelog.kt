@@ -1,6 +1,7 @@
 package com.example.ferm.presentation.components.datos
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,10 +45,8 @@ fun ImageRelog(modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(R.drawable.logo),
                 contentDescription = "Logo",
-                modifier = Modifier.size(120.dp)
+                modifier = Modifier.size(120.dp) //tablet 120.dp
             )
-
-            VerticalDivider(color = Color.Black, thickness = 2.dp)
 
             Text(
                 text = currentTime.toString(),

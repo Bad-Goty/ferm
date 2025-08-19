@@ -12,6 +12,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
@@ -20,19 +22,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.ferm.presentation.viewmodel.CarritosViewModel
 
 @Composable
-fun Historial(modifier: Modifier = Modifier) {
+fun Historial(
+    modifier: Modifier = Modifier,
+    viewModel: CarritosViewModel = hiltViewModel()
+) {
+    val items by viewModel.carrosFinalizadosHoyTop30.collectAsStateWithLifecycle()
+
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(260.dp)
             .padding(horizontal = 8.dp)
             .background(Color.White)
             .border(width = 2.dp, color = Color.Black)
-
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(Modifier.fillMaxSize()) {
             Text(
                 "Historial",
                 color = Color.White,
@@ -42,25 +51,39 @@ fun Historial(modifier: Modifier = Modifier) {
                 textAlign = TextAlign.Center
             )
 
-            Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
-                for (i in 1..30) {
-                    Text(
-                        text = "Carro $i ingreso a las 10:48:00 salio a las 10:50:00",
-                        color = Color.Black,
-                        modifier = Modifier
-                            .padding(horizontal = 4.dp, vertical = 2.dp)
-                            .fillMaxWidth()
-                            .drawBehind {
-                                val strokeWidth = 2.dp.toPx()
-                                val y = size.height - strokeWidth / 2
-                                drawLine(
-                                    color = Color.Black,
-                                    start = Offset(0f, y),
-                                    end = Offset(size.width, y),
-                                    strokeWidth = strokeWidth
+            if (items.isEmpty()) {
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text("Sin registros hoy", color = Color.Gray)
+                }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    items.forEach { it ->
+                        Text(
+                            text = "Carro ${it.carritoNum} ingresó a las ${it.horaEntrada} salió a las ${it.horaSalida} (${it.estadoSalida})",
+                            color = Color.Black,
+                            modifier = Modifier
+                                .padding(horizontal = 4.dp, vertical = 2.dp)
+                                .fillMaxWidth()
+                                .background(if (it.estadoSalida == "bien") Color(0x7C85EC6C) else Color(
+                                    0xDFF5759E
                                 )
-                            }
-                    )
+                                )
+                                .drawBehind {
+                                    val strokeWidth = 2.dp.toPx()
+                                    val y = size.height - strokeWidth / 2
+                                    drawLine(
+                                        color = Color.Black,
+                                        start = Offset(0f, y),
+                                        end = Offset(size.width, y),
+                                        strokeWidth = strokeWidth
+                                    )
+                                }
+                        )
+                    }
                 }
             }
         }

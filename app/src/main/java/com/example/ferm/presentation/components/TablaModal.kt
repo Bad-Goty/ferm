@@ -45,8 +45,8 @@ fun CarritosTableDialog(
                 ) {
                     HeaderCell("ID", 0.8f)
                     HeaderCell("Num", 0.8f)
-                    HeaderCell("Entrada", 1.6f)
-                    HeaderCell("Salida", 1.6f)
+                    //HeaderCell("Entrada", 1.6f)
+                    //HeaderCell("Salida", 1.6f)
                     HeaderCell("Estado", 1.0f)
                     HeaderCell("Activo", 0.8f)
                 }
@@ -69,8 +69,8 @@ fun CarritosTableDialog(
                         ) {
                             BodyCell(item.idCarrito.toString(), 0.8f)
                             BodyCell(item.carritoNum.toString(), 0.8f)
-                            BodyCell(item.fechaEntrada.format(), 1.6f)
-                            BodyCell(item.fechaSalida?.format() ?: "-", 1.6f)
+                            //BodyCell(item.fechaEntrada.format(), 1.6f)
+                            //BodyCell(item.fechaSalida?.format() ?: "-", 1.6f)
                             BodyCell(item.estadoSalida, 1.0f)
                             BodyCell(if (item.status) "Sí" else "No", 0.8f)
                         }
