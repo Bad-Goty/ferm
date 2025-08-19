@@ -71,7 +71,7 @@ fun Camara(
                             Box(
                                 modifier = Modifier
                                     .padding(2.dp)
-                                    .size(80.dp)
+                                    .size(150.dp)
                                     .background(Color.Black)
                             )
                         } else {
