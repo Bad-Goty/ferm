@@ -2,14 +2,22 @@ package com.example.ferm.presentation.components.datos
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,6 +37,7 @@ import com.example.ferm.presentation.viewmodel.CarritosViewModel
 @Composable
 fun Historial(
     modifier: Modifier = Modifier,
+    onTabla: () -> Unit,
     viewModel: CarritosViewModel = hiltViewModel()
 ) {
     val items by viewModel.carrosFinalizadosHoyTop30.collectAsStateWithLifecycle()
@@ -36,20 +45,38 @@ fun Historial(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(260.dp)
+            .height(200.dp)//260
             .padding(horizontal = 8.dp)
             .background(Color.White)
             .border(width = 2.dp, color = Color.Black)
     ) {
         Column(Modifier.fillMaxSize()) {
-            Text(
-                "Historial",
-                color = Color.White,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.fillMaxWidth().background(Color.Black),
-                textAlign = TextAlign.Center
-            )
+            Row( modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.Black),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround
+
+            ) {
+                Text(
+                    "Historial",
+                    color = Color.White,
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+
+                IconButton(
+                    onClick = {onTabla()},
+                    colors = IconButtonDefaults.iconButtonColors(
+                        containerColor = Color.White,
+                        contentColor = Color.Black
+                    ),
+                    modifier = Modifier.size(30.dp)
+                ) {
+                    Icon(Icons.Default.Menu, contentDescription = "Menu")
+                }
+            }
+
 
             if (items.isEmpty()) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

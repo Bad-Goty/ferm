@@ -71,7 +71,7 @@ fun Camara(
                             Box(
                                 modifier = Modifier
                                     .padding(2.dp)
-                                    .size(150.dp)
+                                    .size(150.dp)//150
                                     .background(Color.Black)
                             )
                         } else {
@@ -83,7 +83,7 @@ fun Camara(
                             Box(
                                 modifier = Modifier
                                     .padding(2.dp)
-                                    .size(150.dp)
+                                    .size(150.dp)//150
                                     .background(color),
                                 contentAlignment = Alignment.Center
                             ) {

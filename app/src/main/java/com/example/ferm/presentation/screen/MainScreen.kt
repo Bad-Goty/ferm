@@ -40,7 +40,8 @@ fun MainScreen(
         Datos(
             modifier = Modifier.weight(1f),
             onAgregar = { if (puedeAgregar) viewModel.agregarCarrito() },
-            onQuitarPrimero = { viewModel.quitarPrimero() } // o quitarPrimeroConMinimo()
+            onQuitarPrimero = { viewModel.quitarPrimero() }, // o quitarPrimeroConMinimo()
+            onTabla = { showTabla = true }
         )
         Camara(
             modifier = Modifier.weight(2.5f),
@@ -51,9 +52,6 @@ fun MainScreen(
         )
     }
 
-    /*Button(onClick = { showTabla = true }) {
-        Text("Ver tabla")
-    }*/
 
     if (showTabla) {
         CarritosTableDialog(

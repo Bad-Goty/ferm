@@ -38,17 +38,19 @@ fun CarritosTableDialog(
         title = { Text("Carritos (DESC por ID)") },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
+
                 // Encabezados
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    HeaderCell("ID", 0.8f)
-                    HeaderCell("Num", 0.8f)
-                    //HeaderCell("Entrada", 1.6f)
-                    //HeaderCell("Salida", 1.6f)
+                    //HeaderCell("ID", 0.7f)
+                    HeaderCell("Carrito", 0.7f)
+                    //HeaderCell("Entrada", 1.2f)
+                    //HeaderCell("Salida", 1.2f)
+                    HeaderCell("Duración", 1.2f)
                     HeaderCell("Estado", 1.0f)
-                    HeaderCell("Activo", 0.8f)
+                    //HeaderCell("Activo", 0.8f)
                 }
 
                 Divider()
@@ -61,29 +63,33 @@ fun CarritosTableDialog(
                 ) {
                     items(
                         items = carritos,
-                        key = { it.idCarrito } // opcional: keys estables
+                        key = { it.idCarrito }
                     ) { item ->
+                        val entradaTxt = item.fechaEntrada.formatTimeHM()
+                        val salidaTxt = item.fechaSalida?.formatTimeHM() ?: "-"
+                        val duracionTxt = formatDuration(item.fechaEntrada, item.fechaSalida)
+
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            BodyCell(item.idCarrito.toString(), 0.8f)
-                            BodyCell(item.carritoNum.toString(), 0.8f)
-                            //BodyCell(item.fechaEntrada.format(), 1.6f)
-                            //BodyCell(item.fechaSalida?.format() ?: "-", 1.6f)
+                            //BodyCell(item.idCarrito.toString(), 0.7f)
+                            BodyCell(item.carritoNum.toString(), 0.7f)
+                            //BodyCell(entradaTxt, 1.2f)
+                            //BodyCell(salidaTxt, 1.2f)
+                            BodyCell(duracionTxt, 1.2f)
                             BodyCell(item.estadoSalida, 1.0f)
-                            BodyCell(if (item.status) "Sí" else "No", 0.8f)
+                            //BodyCell(if (item.status) "Sí" else "No", 0.8f)
                         }
                         Divider()
                     }
                 }
-
             }
         }
     )
 }
 
-// Celdas helper
+// ---------- Helpers de celdas (ahora sí usan weight) ----------
 @Composable
 private fun HeaderCell(text: String, weight: Float) {
     Text(
@@ -101,8 +107,24 @@ private fun BodyCell(text: String, weight: Float) {
     )
 }
 
-// Formateo de fechas
-private fun Date.format(): String {
-    val sdf = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.getDefault())
+// ---------- Formateos y duración ----------
+private fun Date.formatTimeHM(): String {
+    val sdf = java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault())
     return sdf.format(this)
+}
+
+/**
+ * Devuelve la duración entre start y end en formato HH:mm:ss.
+ * Si end == null, usa el tiempo actual (carrito en proceso).
+ * Nunca devuelve duración negativa.
+ */
+private fun formatDuration(start: Date, end: Date?): String {
+    val endMs = end?.time ?: System.currentTimeMillis()
+    val diff = (endMs - start.time).coerceAtLeast(0L)
+
+    val hours = java.util.concurrent.TimeUnit.MILLISECONDS.toHours(diff)
+    val minutes = java.util.concurrent.TimeUnit.MILLISECONDS.toMinutes(diff) % 60
+    val seconds = java.util.concurrent.TimeUnit.MILLISECONDS.toSeconds(diff) % 60
+
+    return String.format("%02d:%02d:%02d", hours, minutes, seconds)
 }

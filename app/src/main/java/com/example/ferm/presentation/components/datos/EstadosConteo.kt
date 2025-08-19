@@ -48,7 +48,7 @@ fun EstadosConteo(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(150.dp)
+            .height(150.dp)//150
             .padding(horizontal = 8.dp)
             .background(Color.White)
             .border(width = 2.dp, color = Color.Black)

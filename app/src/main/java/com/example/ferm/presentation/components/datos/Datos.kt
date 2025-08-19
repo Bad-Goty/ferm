@@ -20,7 +20,8 @@ import androidx.compose.ui.unit.dp
 fun Datos(
     modifier: Modifier,
     onAgregar: () -> Unit,
-    onQuitarPrimero: () -> Unit
+    onQuitarPrimero: () -> Unit,
+    onTabla: () -> Unit
 ) {
     Box(modifier = modifier
         .fillMaxSize()
@@ -43,7 +44,7 @@ fun Datos(
 
             Spacer(Modifier.height(8.dp))
 
-            Historial()
+            Historial(onTabla = onTabla)
 
             Spacer(Modifier.height(8.dp))
 

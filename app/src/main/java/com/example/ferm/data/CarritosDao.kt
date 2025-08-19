@@ -15,7 +15,12 @@ interface CarritosDao {
     suspend fun insert(carrito: CarritoEntity): Long
 
     // Obtener todos los carritos ordenados por id_carrito DESC
-    @Query("SELECT * FROM Carritos ORDER BY id_carrito DESC")
+    @Query("""
+        SELECT * 
+        FROM Carritos
+        WHERE date(fecha_entrada / 1000, 'unixepoch') = date('now') AND status = 0
+        ORDER BY id_carrito DESC
+    """)
     fun getAllCarritosDesc(): Flow<List<CarritoEntity>>
 
     // 2) Máximo carrito_num de HOY (zona local)
