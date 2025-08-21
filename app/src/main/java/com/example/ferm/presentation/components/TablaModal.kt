@@ -18,30 +18,38 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavController
 import com.example.ferm.data.entity.CarritoEntity
 import java.util.Date
 
 @Composable
 fun CarritosTableDialog(
     carritos: List<CarritoEntity>,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    navController: NavController
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
+            TextButton(onClick = { navController.navigate("statistics")}) { Text("Ver mas") }
+        },
+        dismissButton = {
             TextButton(onClick = onDismiss) { Text("Cerrar") }
         },
-        title = { Text("Carritos (DESC por ID)") },
+        title = { Text("Carritos del día", Modifier.fillMaxWidth(), textAlign = TextAlign.Center) },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
 
                 // Encabezados
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     //HeaderCell("ID", 0.7f)

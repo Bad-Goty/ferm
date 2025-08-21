@@ -58,6 +58,8 @@ class CarritosViewModel @Inject constructor(
     fun quitarPrimero() = viewModelScope.launch {
         repo.quitarPrimeroAutoEstado()
     }
+
+
     // Si quieres asegurar mínimo 1 activo:
     fun quitarPrimeroConMinimo() = viewModelScope.launch {
         repo.quitarMasAntiguoHasta(minActivos = 1)

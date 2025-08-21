@@ -36,8 +36,8 @@ class CarritosRepository @Inject constructor(
     //----------------------SALIDA------------------------------------
 // Umbrales en segundos
     private companion object {
-        const val YELLOW_MAX = 2700L // 0:00–44:59
-        const val GREEN_MAX  = 2880L // 45:00–47:59 (>=2880 rojo)
+        const val YELLOW_MAX = 2880L // 0:00–44:59
+        const val GREEN_MAX  = 3120L // 45:00–47:59 (>=2880 rojo)
     }
 
     /**

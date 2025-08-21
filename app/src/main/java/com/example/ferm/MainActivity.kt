@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             FermTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MainScreen(modifier = Modifier.padding(innerPadding))
+                    NavScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
         }

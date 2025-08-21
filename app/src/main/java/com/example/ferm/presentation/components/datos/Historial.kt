@@ -32,20 +32,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.example.ferm.presentation.viewmodel.CarritosViewModel
 
 @Composable
 fun Historial(
     modifier: Modifier = Modifier,
     onTabla: () -> Unit,
-    viewModel: CarritosViewModel = hiltViewModel()
+    viewModel: CarritosViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val items by viewModel.carrosFinalizadosHoyTop30.collectAsStateWithLifecycle()
 
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(200.dp)//260
+            .height(260.dp)//260
             .padding(horizontal = 8.dp)
             .background(Color.White)
             .border(width = 2.dp, color = Color.Black)

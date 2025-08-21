@@ -15,13 +15,15 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @Composable
 fun Datos(
     modifier: Modifier,
     onAgregar: () -> Unit,
     onQuitarPrimero: () -> Unit,
-    onTabla: () -> Unit
+    onTabla: () -> Unit,
+    navController: NavController
 ) {
     Box(modifier = modifier
         .fillMaxSize()
@@ -44,7 +46,7 @@ fun Datos(
 
             Spacer(Modifier.height(8.dp))
 
-            Historial(onTabla = onTabla)
+            Historial(onTabla = onTabla, navController = navController)
 
             Spacer(Modifier.height(8.dp))
 

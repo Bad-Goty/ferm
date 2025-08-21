@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.example.ferm.presentation.components.CarritosTableDialog
 import com.example.ferm.presentation.components.camara.Camara
 import com.example.ferm.presentation.components.datos.Datos
@@ -22,7 +23,8 @@ import com.example.ferm.presentation.viewmodel.CarritosViewModel
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    viewModel: CarritosViewModel = hiltViewModel()
+    viewModel: CarritosViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val filas = 4
     val columnas = 5
@@ -41,7 +43,8 @@ fun MainScreen(
             modifier = Modifier.weight(1f),
             onAgregar = { if (puedeAgregar) viewModel.agregarCarrito() },
             onQuitarPrimero = { viewModel.quitarPrimero() }, // o quitarPrimeroConMinimo()
-            onTabla = { showTabla = true }
+            onTabla = { showTabla = true },
+            navController = navController
         )
         Camara(
             modifier = Modifier.weight(2.5f),
@@ -56,7 +59,8 @@ fun MainScreen(
     if (showTabla) {
         CarritosTableDialog(
             carritos = carritos,
-            onDismiss = { showTabla = false }
+            onDismiss = { showTabla = false },
+            navController = navController
         )
     }
 }
